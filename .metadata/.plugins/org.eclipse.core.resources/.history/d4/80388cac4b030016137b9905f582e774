@@ -1,0 +1,71 @@
+package com.CraigAndZac.Search;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
+public class InputOutput {
+
+	public static BufferedReader readFiletoArrayList(String fileName) {
+		FileReader fileReader = null;
+		try {
+			fileReader = new FileReader(fileName);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+		BufferedReader bufferedReader = new BufferedReader(fileReader);
+		
+		return bufferedReader;
+	}
+
+	public static void writeArrayListToFile(StringBuilder sourceCode, int filenumber) {
+		InputStream is = new ByteArrayInputStream(sourceCode.toString().getBytes());
+		BufferedReader br = new BufferedReader(new InputStreamReader(is));
+		
+		try {
+
+			String inputLine;
+			// Save to this filename
+			
+			String fileName;
+			if (filenumber > 50) {
+				fileName = "/users/Craig/Desktop/Results.txt";
+			}
+			else if (filenumber%2 == 0) {
+				fileName = "/users/Craig/Desktop/" + filenumber + "CraigRules.html";
+			}else {
+				fileName = "/users/Craig/Desktop/" + filenumber + "ZacRules.html";
+			}
+			
+			
+			File file = new File(fileName);
+
+			if (!file.exists()) {
+				file.createNewFile();
+			}
+
+			// Use FileWriter to write file
+			FileWriter fw = new FileWriter(file.getAbsoluteFile());
+			BufferedWriter bw = new BufferedWriter(fw);
+
+			while ((inputLine = br.readLine()) != null) {
+				bw.write(inputLine);
+				bw.newLine();
+
+			}
+			System.out.println("Done");
+			bw.close();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+
+	}
+
+}

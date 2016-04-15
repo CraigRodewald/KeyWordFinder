@@ -1,0 +1,78 @@
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
+
+
+public class SaveOurAss {
+
+	public static void main(String[] args) {
+		URL url;
+
+		// TODO change this to read from file of hyperlink
+		String website = "http://www94.web.cern.ch/WWW94/Welcome.html";
+
+		try {
+			// Get URL content
+			url = new URL(website);
+
+			// Opens connection to the website
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+			// Open the stream and put it into BufferedReader
+			BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+
+			/*
+			 * This is where the comparing will need to go probably in a
+			 * different class
+			 */
+
+			// TODO add a new StringBuffer
+
+			//for (String word : words) {
+			//	System.out.println(word);
+			//}
+
+			// Write to file
+
+			String inputLine;
+			// Save to this filename
+			String fileName = "/users/Craig/Desktop/test.html";
+			File file = new File(fileName);
+
+			if (!file.exists()) {
+				file.createNewFile();
+			}
+
+			// Use FileWriter to write file
+			FileWriter fw = new FileWriter(file.getAbsoluteFile());
+			BufferedWriter bw = new BufferedWriter(fw);
+
+			while ((inputLine = br.readLine()) != null) {
+				bw.write(inputLine);
+				System.out.println(inputLine);
+			}
+			bw.close();
+
+			br.close();
+
+			System.out.println("Done");
+
+			// TODO Find out which exceptions to use
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+}
+
+

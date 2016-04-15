@@ -1,0 +1,41 @@
+package com.CraigAndZac.Search;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+
+public class InputOutput {
+
+	public void readFiletoArrayList() {
+
+	}
+
+	public void writeArrayListToFile(BufferedReader br) {
+		try {
+
+			String inputLine;
+			// Save to this filename
+			String fileName = "/users/Craig/Desktop/test.html";
+			File file = new File(fileName);
+
+			if (!file.exists()) {
+				file.createNewFile();
+			}
+
+			// Use FileWriter to write file
+			FileWriter fw = new FileWriter(file.getAbsoluteFile());
+			BufferedWriter bw = new BufferedWriter(fw);
+
+			while ((inputLine = br.readLine()) != null) {
+				bw.write(inputLine);
+
+			}
+			bw.close();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+
+	}
+
+}

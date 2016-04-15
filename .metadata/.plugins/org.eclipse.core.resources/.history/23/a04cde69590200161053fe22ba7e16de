@@ -1,0 +1,27 @@
+package com.CraigAndZac.Search;
+
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+
+public class WebProcess {
+
+	public static void doWebStuff(){
+	URL url;
+
+	// TODO change this to read from file of hyperlink
+	String website = "http://www94.web.cern.ch/WWW94/Welcome.html";
+
+	try {
+		// Get URL content
+		url = new URL(website);
+
+		// Opens connection to the website
+		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+	} catch (MalformedURLException e) {
+		e.printStackTrace();
+	} catch (IOException e) {
+		e.printStackTrace();
+	}		
+	}
+}

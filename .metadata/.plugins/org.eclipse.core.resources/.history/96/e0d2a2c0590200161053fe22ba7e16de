@@ -1,0 +1,63 @@
+package com.CraigAndZac.Search;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.Scanner;
+
+public class WordSearchApp {
+
+	public static void main(String[] args) {
+		Scanner scan = new Scanner(System.in);
+		BufferedReader searchWords;
+		String[] menuOptions = {"Main Menu", "1- Website One", "2- Website Two", "3- Website Three", "4- Website Four", "5- Search All Websites", "6- Add your own website", "7- Exit"};
+		String userSelection;
+		String vocabFileName = "/users/Craig/workspace/KeyWordFinder/SearchWords.txt";
+		
+		
+		System.out.println("Welcome to the Word Search Application!");
+		
+		
+		// Read file of search words
+		searchWords = InputOutput.readFiletoArrayList(vocabFileName);
+		// Put them into an ArrayList
+
+		
+		
+		// Read file of websites
+		
+		// Put them into an ArrayList
+		
+		
+		
+	// Main Loop
+		
+		// Display Menu
+		
+		
+		// Get user's selection pick url or all
+		
+
+		// Find url in list and store in String variable
+		
+		
+		// Pick user's selected website from list
+		
+		
+		// Pull html info from website into StingBuffer
+		
+		
+		// Search html info with each of the words in searchWords ArrayList
+		
+		
+		//  If there is a match, replace matched word with a mark tag and put in counter
+		
+		
+		// Store counter by url and times used
+		
+		
+		// Write modified html info to file (should have highlighted words)
+		
+	// End Main Loop	
+ 
+	}
+}

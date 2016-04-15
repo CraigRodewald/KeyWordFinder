@@ -1,0 +1,42 @@
+package com.CraigAndZac.Search;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.util.ArrayList;
+
+public class StringManipulation {
+	
+	public static ArrayList<String> toArrayList(BufferedReader br) throws IOException{
+		ArrayList<String> list = new ArrayList<String>();
+		
+		String words = null;
+		
+		while ((words = br.readLine()) != null) {
+			String[] array = words.split(" ");
+			for(String each: array){
+				list.add(each);
+			}
+		}
+		
+		return list;
+	}
+	
+	public static void searchArrayListWithSearchWords(String htmlInfo, ArrayList<String> wordList){
+		String mockList = "Geneva";
+		StringBuilder sb = new StringBuilder();
+		
+		// Convert to an arrayList instead to use compareTo
+		
+		String[] htmlList = htmlInfo.split("<> |\\ ");
+		
+		
+		
+		for (String word : htmlList) {
+			if(word.equals(mockList)){
+				word = "<mark>" + word + "</mark>";
+			}
+			sb.append(word + " ");
+		}
+		System.out.println(sb.toString());
+	}
+}

@@ -1,0 +1,137 @@
+package com.CraigAndZac.Search;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Scanner;
+
+public class WordSearchApp {
+
+	public static void main(String[] args) {
+		Scanner scan = new Scanner(System.in);
+		BufferedReader searchWords;
+		BufferedReader hyperlinks;
+		StringBuilder modifiedSourceCode;
+		String htmlInfo;
+		String userAnswer;
+		HashMap<String, ArrayList<String>> map = new HashMap<String, ArrayList<String>>();
+		String[] menuOptions = { "Main Menu", "1- Website One", "2- Website Two", "3- Website Three", "4- Website Four",
+				"5- Search All Websites", "6- Exit" };
+		int modifiedHTMLfile;
+		String vocabFileName = "/users/Craig/workspace/KeyWordFinder/SearchWords.txt";
+		String urlListFileName = "/users/Craig/workspace/KeyWordFinder/UrlList.txt";
+		String userPickedUrl = null;
+
+		System.out.println("Welcome to the Word Search Application!");
+
+		// Read file of search words
+		searchWords = InputOutput.readFiletoArrayList(vocabFileName);
+		// Put them into an ArrayList
+		ArrayList<String> wordList = new ArrayList<String>();
+		try {
+			wordList = StringManipulation.toArrayList(searchWords);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		// Read file of websites
+		hyperlinks = InputOutput.readFiletoArrayList(urlListFileName);
+		// Put them into an ArrayList
+		ArrayList<String> urlList = new ArrayList<String>();
+		try {
+			urlList = StringManipulation.toArrayList(hyperlinks);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		// Main Loop
+		do {
+			// Display Menu
+			createmenu(menuOptions);
+			// Get user's selection pick url or all
+			System.out.print("Please make a selection: ");
+			userAnswer = scan.next();
+			// Find url in list and store in String variable
+			switch (Integer.parseInt(userAnswer)) {
+			case 1:
+				modifiedHTMLfile = (Integer.parseInt(userAnswer));
+				userPickedUrl = urlList.get(0);
+				startTheSearch(userPickedUrl, wordList, modifiedHTMLfile, map);
+				break;
+			case 2:
+				modifiedHTMLfile = (Integer.parseInt(userAnswer));
+				userPickedUrl = urlList.get(1);
+				startTheSearch(userPickedUrl, wordList, modifiedHTMLfile, map);
+				break;
+			case 3:
+				modifiedHTMLfile = (Integer.parseInt(userAnswer));
+				userPickedUrl = urlList.get(2);
+				startTheSearch(userPickedUrl, wordList, modifiedHTMLfile, map);
+				break;
+			case 4:
+				modifiedHTMLfile = (Integer.parseInt(userAnswer));
+				userPickedUrl = urlList.get(3);
+				startTheSearch(userPickedUrl, wordList, modifiedHTMLfile, map);
+				break;
+			case 5:
+				// Get all
+				for (int i = 0; i < 4; i++) {
+					modifiedHTMLfile = (i + 1);
+					userPickedUrl = urlList.get(i);
+					startTheSearch(userPickedUrl, wordList, modifiedHTMLfile, map);
+					convertHashMapToStr(map);
+				}
+
+				break;
+			case 6:
+				System.out.println("Thank you for trying out out application");
+				break;
+
+			default:
+				System.out.println("Invalid Entry.  Please try again.");
+				break;
+			}
+
+			// End Main Loop
+		} while (!(userAnswer.equalsIgnoreCase("6")));
+		scan.close();
+	}
+
+	private static void startTheSearch(String userPickedUrl, ArrayList<String> wordList, int fileNumber,
+			HashMap<String, ArrayList<String>> map) {
+		StringBuilder modifiedSourceCode;
+		String htmlInfo;
+		// Pull html info from website into StingBuffer
+		htmlInfo = WebProcess.doWebStuff(userPickedUrl);
+		// System.out.println(htmlInfo);
+		// Search html info with each of the words in searchWords ArrayList
+		String[] htmlSourceCode = StringManipulation.splitStringIntoArray(htmlInfo);
+		modifiedSourceCode = StringManipulation.searchArrayListWithSearchWords(htmlSourceCode, wordList, userPickedUrl,
+				map);
+		// If there is a match, replace matched word with a mark tag and put in
+		// counter
+		// Write modified html info to file (should have highlighted words)
+		InputOutput.writeArrayListToFile(modifiedSourceCode, fileNumber);
+	}
+
+	private static void createmenu(String[] menuOptions) {
+
+		for (String option : menuOptions) {
+			System.out.println(option);
+		}
+
+	}
+
+	private static void convertHashMapToStr(HashMap<String, ArrayList<String>> map) {
+		StringBuilder sb = new StringBuilder();
+		
+		for (String keyName : map.keySet()) {
+
+			String key = keyName.toString();
+			String value = map.get(keyName).toString();
+			sb.append(key + " " + value);
+		}
+		InputOutput.writeArrayListToFile(sb, 69);
+	}
+}

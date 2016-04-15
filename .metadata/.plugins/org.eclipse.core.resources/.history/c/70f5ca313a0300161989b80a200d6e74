@@ -1,0 +1,72 @@
+package com.CraigAndZac.Search;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+
+public class StringManipulation {
+
+	public static ArrayList<String> toArrayList(BufferedReader br) throws IOException {
+		ArrayList<String> list = new ArrayList<String>();
+
+		String words = null;
+
+		while ((words = br.readLine()) != null) {
+			String[] array = splitStringIntoArray(words);
+			for (String each : array) {
+				list.add(each);
+			}
+		}
+
+		return list;
+	}
+
+	public static String[] splitStringIntoArray(String htmlInfo) {
+		String[] htmlSourceCode = htmlInfo.split(" ");
+		return htmlSourceCode;
+	}
+
+	public static StringBuilder searchArrayListWithSearchWords(String[] htmlSourceCode, ArrayList<String> wordList,
+			String urlName, HashMap<String, ArrayList<String>> map) {
+
+		StringBuilder sb = new StringBuilder();
+
+		for (String searchWord : wordList) {
+
+			for (int i = 0; i < htmlSourceCode.length; i++) {
+
+				if (htmlSourceCode[i].equals(searchWord)) {
+					htmlSourceCode[i] = "<mark>" + searchWord + "</mark>";
+				}
+				if (map.containsKey(searchWord)) {
+						ArrayList<String> urlList = map.get(searchWord);
+						if(!(urlList.contains(urlName))){
+							urlList.add(urlName);
+							map.put(searchWord, urlList);
+						}
+					
+				}else{
+					ArrayList<String> urlList = new ArrayList<String>();
+					urlList.add(urlName);
+					map.put(searchWord, urlList);
+				}
+
+			}
+		}
+
+		for (String keyName : map.keySet()) {
+
+			String key = keyName.toString();
+			String value = map.get(keyName).toString();
+			System.out.println(key + " " + value);
+		}
+
+		for (int i = 0; i < htmlSourceCode.length; i++) {
+			// System.out.println(htmlSourceCode[i]);
+			sb.append(htmlSourceCode[i] + " ");
+		}
+
+		return sb;
+	}
+}

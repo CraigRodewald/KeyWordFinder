@@ -1,0 +1,7 @@
+1460655271885	Rename local variable 'wordList'
+1460655421931	Rename local variable 'eachWord'
+1460662855115	Rename local variable 'htmlList'
+1460663901669	Rename local variable 'br'
+1460676472146	Extract method 'startTheSearch'
+1460680295903	Copy compilation units
+1460735085182	Rename local variable 'name'

@@ -1,0 +1,71 @@
+package com.CraigAndZac.Search;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+
+public class StringManipulation {
+
+	public static ArrayList<String> toArrayList(BufferedReader br) throws IOException {
+		ArrayList<String> list = new ArrayList<String>();
+
+		String words = null;
+
+		while ((words = br.readLine()) != null) {
+			String[] array = splitStringIntoArray(words);
+			for (String each : array) {
+				list.add(each);
+			}
+		}
+
+		return list;
+	}
+
+	public static String[] splitStringIntoArray(String htmlInfo) {
+		String[] htmlSourceCode = htmlInfo.split(" ");
+		return htmlSourceCode;
+	}
+
+	public static StringBuilder searchArrayListWithSearchWords(String[] htmlSourceCode, ArrayList<String> wordList,
+			String urlName, HashMap<String, ArrayList<String>> map) {
+		StringBuilder sb = new StringBuilder();
+		ArrayList<String> mapWord;
+		ArrayList<String> urlList = new ArrayList<String>();
+		for (String searchWord : wordList) {
+			for (int i = 0; i < htmlSourceCode.length; i++) {
+				if (htmlSourceCode[i].equals(searchWord)) {
+					// System.out.println(word);
+					htmlSourceCode[i] = "<mark>" + searchWord + "</mark>";
+					// System.out.println(word);
+					urlList.add(urlName);
+					// TODO Add hashmap
+					map.put(searchWord, urlList);
+				}
+			}
+		}
+		
+		
+		mapWord = map.getOrDefault("over", urlList);
+		System.out.println(mapWord);
+		
+		
+		/*for (int i = 0; i < wordList.size(); i++) {
+			mapWord = map.get(wordList.get(i));
+			if (mapWord != null) {
+				System.out.println(map.get("were"));
+				for (int j = 0; j < mapWord.size(); j++) {
+					System.out.print("\t" + mapWord.get(j));
+				}
+				System.out.println();
+			}
+		}*/
+
+		for (int i = 0; i < htmlSourceCode.length; i++) {
+			// System.out.println(htmlSourceCode[i]);
+			sb.append(htmlSourceCode[i] + " ");
+		}
+
+		return sb;
+	}
+}
